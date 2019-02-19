@@ -1,0 +1,22 @@
+{
+  "name": "botscribe",
+  "version": "1.0.0",
+  "description": "Simple tool to store messages from kafka to the db.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node services/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vlab-research/botscribe.git"
+  },
+  "author": "V-Lab",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vlab-research/botscribe/issues"
+  },
+  "homepage": "https://github.com/vlab-research/botscribe#readme",
+  "dependencies": {
+    "node-rdkafka": "2.5.1"
+  }
+}
