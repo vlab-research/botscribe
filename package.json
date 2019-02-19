@@ -4,6 +4,7 @@
   "description": "Simple tool to store messages from kafka to the db.",
   "main": "index.js",
   "scripts": {
+    "dev": "npx nodemon services/index.js",
     "start": "node services/index.js"
   },
   "repository": {
