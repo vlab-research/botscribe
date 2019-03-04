@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: gbv-botscribe
-        image: nandanrao/gbv-botscribe:0.0.1
+        image: vlabresearch/gbv-botscribe:0.0.1
         resources:
           requests:
             cpu: "100m"
