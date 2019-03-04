@@ -2,7 +2,7 @@
   "name": "botscribe",
   "version": "1.0.0",
   "description": "Simple tool to store messages from kafka to the db.",
-  "main": "index.js",
+  "main": "services/index.js",
   "scripts": {
     "dev": "npx nodemon services/index.js",
     "start": "node services/index.js"
@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/vlab-research/botscribe#readme",
   "dependencies": {
+    "@vlab-research/chatbase-gcs": "0.0.5",
+    "@vlab-research/steez": "0.0.1",
     "node-rdkafka": "2.5.1"
   }
 }

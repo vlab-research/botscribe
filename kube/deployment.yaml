@@ -5,7 +5,7 @@ metadata:
   labels:
     app: gbv-botscribe
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: gbv-botscribe
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: gbv-botscribe
-        image: nandanrao/gbv-botscribe:0.0.2
+        image: nandanrao/gbv-botscribe:0.0.1
         resources:
           requests:
             cpu: "100m"
@@ -26,4 +26,16 @@ spec:
         envFrom:
         - secretRef:
             name: gbv-bot-envs
-
+        env:
+        - name: CHATBASE_BACKEND
+          value: "@vlab-research/chatbase-gcs"
+        - name: CHATBASE_BUCKET
+          value: "gbv-chatbase-test"
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: "keys/key.json"
+        - name: KAFKA_TOPIC
+          value: "chat-events"
+      volumes:
+        - name: keys
+          secret:
+            secretName: gbv-botscribe-keys
