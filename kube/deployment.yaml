@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: gbv-botscribe
-        image: vlabresearch/gbv-botscribe:0.0.1
+        image: vlabresearch/botscribe:0.0.2
         resources:
           requests:
             cpu: "100m"
@@ -35,6 +35,8 @@ spec:
           value: "keys/key.json"
         - name: KAFKA_TOPIC
           value: "chat-events"
+        - name: BOTSCRIBE_SUBSTREAM_SIZE
+          value: "500"
       volumes:
         - name: keys
           secret:

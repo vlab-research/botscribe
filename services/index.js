@@ -12,7 +12,9 @@ const kafkaOpts = {
   'enable.auto.commit': false
 }
 
-const stream = new Kafka.createReadStream(kafkaOpts, {'auto.offset.reset': 'earliest'}, { topics: [process.env.KAFKA_TOPIC]})
+const stream = new Kafka.createReadStream(kafkaOpts,
+                                          {'auto.offset.reset': 'earliest'},
+                                          { topics: [process.env.KAFKA_TOPIC]})
 const chatbase = new Chatbase()
 
 const write = async (msg) => {
@@ -22,10 +24,13 @@ const write = async (msg) => {
   stream.consumer.commitMessage(msg)
 }
 
-const subStreamer = () => new PromiseStream(write, {highWaterMark: 50})
+
+const subStreamer = () => new PromiseStream(write, {
+  highWaterMark: +process.env.BOTSCRIBE_SUBSTREAM_SIZE || 50
+})
 const dbStream = new KeyedStreamer(m => m.key.toString(),
                                         subStreamer,
-                                        {highWaterMark: 200})
+                                        { highWaterMark: 250 })
 
 stream
   .pipe(dbStream)
