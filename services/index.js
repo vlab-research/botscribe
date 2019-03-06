@@ -26,12 +26,9 @@ const write = async (msg) => {
 }
 
 
-const subStreamer = () => new PromiseStream(write, {
-  highWaterMark: +process.env.BOTSCRIBE_SUBSTREAM_SIZE || 50
+const dbStream = new PromiseStream(write, {
+  highWaterMark: +process.env.BOTSCRIBE_HIGHWATER || 50
 })
-const dbStream = new KeyedStreamer(m => m.key.toString(),
-                                        subStreamer,
-                                        { highWaterMark: 250 })
 
 stream
   .pipe(dbStream)

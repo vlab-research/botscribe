@@ -5,7 +5,7 @@ metadata:
   labels:
     app: gbv-botscribe
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: gbv-botscribe
@@ -16,11 +16,11 @@ spec:
     spec:
       containers:
       - name: gbv-botscribe
-        image: vlabresearch/botscribe:0.0.3
+        image: vlabresearch/botscribe:0.0.4
         resources:
           requests:
             cpu: "100m"
-            memory: "500Mi"
+            memory: "100Mi"
         ports:
         - containerPort: 80
         envFrom:
@@ -43,7 +43,7 @@ spec:
           value: "chat-events"
         - name: KAFKA_GROUP_ID
           value: "botscribe-chatroach"
-        - name: BOTSCRIBE_SUBSTREAM_SIZE
+        - name: BOTSCRIBE_HIGHWATER
           value: "500"
       volumes:
         - name: keys
