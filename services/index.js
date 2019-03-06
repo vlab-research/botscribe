@@ -7,8 +7,8 @@ const kafkaOpts = {
   'retry.backoff.ms': 200,
   'socket.keepalive.enable': true,
   'session.timeout.ms': 60000,
-  'group.id': 'botscribe',
-  'client.id': 'botscribe',
+  'group.id': process.env.KAFKA_GROUP_ID,
+  'client.id': process.env.KAFKA_GROUP_ID,
   'enable.auto.commit': false
 }
 
