@@ -20,7 +20,8 @@ const chatbase = new Chatbase()
 const write = async (msg) => {
   const val = msg.value.toString()
   const key = msg.key.toString()
-  await chatbase.put(key, val)
+  const date = new Date(+msg.timestamp.toString())
+  await chatbase.put(key, val, date)
   stream.consumer.commitMessage(msg)
 }
 
