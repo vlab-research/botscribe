@@ -1,5 +1,6 @@
 eval $(minikube docker-env)
 
-kubectl delete -f kube
-docker build -t vlabresearch/botscribe:0.0.3 .
-kubectl apply -f kube
+kubectl delete -f kube-dev
+docker build -t localhost:32000/botscribe:registry .
+docker push localhost:32000/botscribe:registry
+kubectl apply -f kube-dev

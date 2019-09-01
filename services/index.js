@@ -1,55 +1,18 @@
-const Kafka = require('node-rdkafka')
+const {BotSpine} = require('@vlab-research/botspine')
 const Chatbase = require(process.env.CHATBASE_BACKEND)
-const {KeyedStreamer, PromiseStream} = require('@vlab-research/steez')
+const {pipeline} = require('stream')
 
-const kafkaOpts = {
-  'metadata.broker.list': `${process.env.KAFKA_BROKER}:${process.env.KAFKA_PORT}`,
-  'retry.backoff.ms': 200,
-  'socket.keepalive.enable': true,
-  'session.timeout.ms': 60000,
-  'group.id': process.env.KAFKA_GROUP_ID,
-  'client.id': process.env.KAFKA_GROUP_ID,
-  'enable.auto.commit': false
-}
-
-const stream = new Kafka.createReadStream(kafkaOpts,
-                                          {'auto.offset.reset': 'earliest'},
-                                          { topics: [process.env.KAFKA_TOPIC]})
 const chatbase = new Chatbase()
 
-const write = async (msg) => {
-  const val = msg.value.toString()
-  const key = msg.key.toString()
-  const date = new Date(+msg.timestamp.toString())
-  await chatbase.put(key, val, date)
-  stream.consumer.commitMessage(msg)
+const write = async ({key, value, timestamp}) => {
+  const date = new Date(+timestamp)
+  const res = await chatbase.put(key, value, date)
+  return res
 }
 
+const spine = new BotSpine('botscribe')
 
-const dbStream = new PromiseStream(write, {
-  highWaterMark: +process.env.BOTSCRIBE_HIGHWATER || 50
-})
-
-stream
-  .pipe(dbStream)
-  .on('error', err => {
-    console.error(err)
-  })
-
-
-// ------- SHUT DOWN --------
-// TODO: Cleanup!
-const signals = {
-  'SIGHUP': 1,
-  'SIGINT': 2,
-  'SIGTERM': 15
-}
-
-for (let [signal, value] in signals) {
-  process.on(signal, () => {
-    stream.consumer.disconnect()
-    stream.consumer.on('disconnected', () => {
-      process.exit(128 + value)
-    })
-  })
-}
+pipeline(spine.source(),
+         spine.chunkedTransform(write, 10, 5000),
+         spine.sink(),
+         err => console.error(err))

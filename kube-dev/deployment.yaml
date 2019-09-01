@@ -5,7 +5,7 @@ metadata:
   labels:
     app: gbv-botscribe
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: gbv-botscribe
@@ -16,11 +16,12 @@ spec:
     spec:
       containers:
       - name: gbv-botscribe
-        image: vlabresearch/botscribe:0.0.4
+        image: localhost:32000/botscribe:registry
+        imagePullPolicy: Always
         resources:
           requests:
-            cpu: "100m"
-            memory: "100Mi"
+            cpu: "10m"
+            memory: "10Mi"
         ports:
         - containerPort: 80
         envFrom:

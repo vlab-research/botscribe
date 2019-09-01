@@ -5,6 +5,7 @@ FROM node:10-stretch
 WORKDIR /usr/src/app
 
 # Install dependencies
+RUN npm install node-rdkafka
 COPY package.json .
 RUN npm install
 COPY . .

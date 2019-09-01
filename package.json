@@ -18,9 +18,7 @@
   },
   "homepage": "https://github.com/vlab-research/botscribe#readme",
   "dependencies": {
-    "@vlab-research/chatbase-gcs": "0.0.5",
-    "@vlab-research/chatbase-postgres": "0.0.3",
-    "@vlab-research/steez": "0.0.1",
-    "node-rdkafka": "2.5.1"
+    "@vlab-research/botspine": "0.0.8",
+    "@vlab-research/chatbase-postgres": "0.0.3"
   }
 }
