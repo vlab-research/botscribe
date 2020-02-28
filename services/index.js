@@ -13,6 +13,6 @@ const write = async ({key, value, timestamp}) => {
 const spine = new BotSpine('botscribe')
 
 pipeline(spine.source(),
-         spine.chunkedTransform(write, 10, 5000),
+         spine.transform(write),
          spine.sink(),
          err => console.error(err))
