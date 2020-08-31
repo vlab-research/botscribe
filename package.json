@@ -19,6 +19,6 @@
   "homepage": "https://github.com/vlab-research/botscribe#readme",
   "dependencies": {
     "@vlab-research/botspine": "0.0.8",
-    "@vlab-research/chatbase-postgres": "0.0.3"
+    "@vlab-research/chatbase-postgres": "0.0.4"
   }
 }
